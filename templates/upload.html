@@ -16,6 +16,8 @@
 	</style>
 
 	<body>
+    <form action = "/uploader" method = "POST" enctype = "multipart/form-data">
+
 		<div class="upload">
 			<div class="upload-files">
 				<header>
@@ -29,7 +31,8 @@
 				<div class="body" id="drop">
 					<i class="fa fa-file-text-o pointer-none" aria-hidden="true"></i>
 					<p class="pointer-none"><b>Drag and drop</b> audio files here <br /> or <a href="" id="triggerFile">browse</a> to begin the upload</p>
-					<input type="file" multiple="multiple" />
+           <input name="file" type="file" multiple="multiple" />
+           <input type = "submit"/>
 				</div>
 				
 				<footer>
@@ -38,19 +41,20 @@
 				</div>
 				<div class="list-files">
 				
-				</div>
-				
+				</div>		
 				<button class="importar">CHANGE FILES</button>
 				</footer>
         <a href="/visualize">
+
         <div class="submitFileBtn">
           <button class="submitFileBtn">SUBMIT FILES </button>
+
         </div>
         </a>
 
 			</div>
 		</div>
-
+    </form>
     <script>
 		//DOM
 		var $ = document.querySelector.bind(document);
