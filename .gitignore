@@ -2,3 +2,7 @@
 HackMIT2020/
 
 mit/
+
+.DS_Store
+
+__pycache__/
