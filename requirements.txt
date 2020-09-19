@@ -1,2 +1,4 @@
 google-cloud-speech
 spacy
+firebase
+pyrebase

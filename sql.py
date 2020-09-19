@@ -20,7 +20,7 @@ with connection.cursor() as cursor:
     cursor.execute("INSERT INTO table_name (col1) VALUES (4)")
 
     #iterate thorugh a select * statement
-    for value in cursor.execute("SELECT * from drug_data"):
+    for value in cursor.execute("SELECT * from table_name"):
         print(value)
 
 

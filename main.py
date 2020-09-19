@@ -1,7 +1,11 @@
+from speech2text import getTranscript, parse, renderEntities
+
 from flask import Flask, render_template, redirect, request, session, flash
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 import pyrebase
+
+import os
 
 app = Flask(__name__)   
 
@@ -27,6 +31,11 @@ db = firebase.database()
 from firebase import firebase as fb
 fileNameTableDatabase = fb.FirebaseApplication('https://hackmit-818a9.firebaseio.com/fileNameTable')
 
+# Create user_data directory if not exists
+user_data_dir = "user_data"
+if not os.path.exists(user_data_dir):
+	os.makedirs(user_data_dir, exist_ok=True)
+
 @app.route("/")                   
 def home():
 	return render_template('index.html')
@@ -39,8 +48,9 @@ def upload():
 def uploader():		
 	try:
 		f = request.files['file']
-		f.save(secure_filename(f.filename))
-		currFileName = f.filename
+		path = os.path.join(user_data_dir, secure_filename(f.filename))
+		f.save(path)
+		currFileName = path # f.filename
 	except:
 		return redirect("/upload")
 	
@@ -52,8 +62,12 @@ def uploader():
 def visualize():
 	#wrote out the firebase command for you
 	fileName = fileNameTableDatabase.get('/fileNameTable', None)   
-	return fileName
-	#return render_template("visualize.html")
+	# return fileName
+	recognized_text = getTranscript(fileName)
+	doc = parse(recognized_text)
+	annotated_transcript = renderEntities(doc)
+	# return render_markup
+	return render_template("visualize.html", annotated_transcript=annotated_transcript)
 
 
 if __name__ == "__main__":        

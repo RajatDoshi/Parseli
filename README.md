@@ -24,6 +24,7 @@ Create service account in GCP console:
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"
+export GOOGLE_APPLICATION_CREDENTIALS="/Users/agong/research/hackmit2020/galvanic-axle-290004-a4517a7b5ca8.json"
 ```
 
 ### Run transcription
