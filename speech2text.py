@@ -1,28 +1,28 @@
 # Source:
 # https://github.com/googleapis/python-speech/blob/master/samples/snippets/quickstart.py
 
-# [START speech_quickstart]
 import io
 import os
 
 # Imports the Google Cloud client library
-# [START speech_python_migration_imports]
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
-# [END speech_python_migration_imports]
+
+import spacy
 
 # Instantiates a client
-# [START speech_python_migration_client]
 client = speech.SpeechClient()
-# [END speech_python_migration_client]
+# Instantiates nlp model
+nlp = spacy.load("en_core_web_sm")
 
 # The name of the audio file to transcribe
 # file_name = os.path.join(
 #     os.path.dirname(__file__),
 #     'resources',
 #     'audio.raw')
-"""file_name = "brooklyn.flac"
+"""
+file_name = "brooklyn.flac"
 
 # Loads the audio into memory
 with io.open(file_name, 'rb') as audio_file:
@@ -39,7 +39,7 @@ response = client.recognize(config, audio)
 
 for result in response.results:
     print('Transcript: {}'.format(result.alternatives[0].transcript))
-# [END speech_quickstart]"""
+"""
 
 def getTranscript(file_name):
     # Loads the audio into memory
@@ -62,3 +62,6 @@ def getTranscript(file_name):
 
     return recognized_text
 
+def parse(text):
+    doc = nlp(text)
+    return doc
