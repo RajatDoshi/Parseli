@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<title>HackMIT</title>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	</head>
+	<body>
+		<header id="homeHeader">
+			<div class = "WebsiteTitle">
+				<h1 id ="hackMITtitle">HackMIT</h1>
+			</div>
+			<div class ="WebsiteSmallerTitle">
+				<p> You Are Not Alone in This Journey </p>
+			</div>
+
+			<div class = "LandingButtons">
+				<a href="/upload">
+					<button class="uploadLandingPageButton">
+						Upload Conversation
+					</button>
+				</a>
+				<a href="/visualize">
+					<button class="visualizeLandingPageButton">
+						Visualize Conversation 
+					</button>
+				</a>
+			</div>
+
+			<a href="#aboutHeader"><input class="downButton" type="image" src="https://cdn1.iconfinder.com/data/icons/arrows-14/24/Arrow-Down_in_Circle-512.png"/></a>
+		</header>
+
+		<header id="aboutHeader">
+			<div class="w3-container w3-padding-32" id="about">
+				<h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">About</h3>
+				<p>We understand that recieving a medical diagnosis can be an overwhelming process. Oftentimes, we find ourselves coming to grip with our circumstances. I remember when my dad first found out his prognosis, he told me his mind went blank for the rest of the conversation. It's almost as if everything goes blank in that moment and your mind just races. This reality is far too common for us to stand around. Hence, we are creating an application to help visualize touch and complex conversations with doctors. Below you will find our team that here's with you for this journey.
+				</p>
+			</div>
+
+			<div class="w3-row-padding w3-grayscale">
+				<div class="w3-col l3 m6 w3-margin-bottom">
+				  <img src="https://i1.rgstatic.net/ii/profile.image/589467366731776-1517551380112_Q512/Rajat_Doshi2.jpg" alt="Rajat" style="width:100%">
+				  <h3>Rajat Doshi</h3>
+				  <p class="w3-opacity">Founder</p>
+				  <p>Rajat is a Computer Science & Economics major at Yale interested in the intersection of artificial inteligence and medicine.</p>
+				  <p><a href="#contactUs"><button class="w3-button w3-light-grey w3-block">Contact</button></a></p>
+				</div>
+				<div class="w3-col l3 m6 w3-margin-bottom">
+				  <img src="https://scontent.ftpa1-1.fna.fbcdn.net/v/t1.0-9/94491304_1143093726039870_5755133649812979712_n.jpg?_nc_cat=105&_nc_sid=09cbfe&_nc_ohc=9nLJgOFTuOQAX_9ClT3&_nc_ht=scontent.ftpa1-1.fna&oh=ac9980c75ea28091561c986363239143&oe=5F8A504F" alt="Ashwin" style="width:100%">
+				  <h3>Ashwin Agnihotri</h3>
+				  <p class="w3-opacity">Founder</p>
+				  <p>Ashwin is an Applied Math major at Yale interested in using computer science to make the world a better place.</p>
+				  <p><a href="#contactUs"><button class="w3-button w3-light-grey w3-block">Contact</button></a></p>
+				</div>
+				<div class="w3-col l3 m6 w3-margin-bottom">
+				  <img src="https://scontent.ftpa1-1.fna.fbcdn.net/v/t1.0-9/20526028_1833162510346034_5635308491390314093_n.jpg?_nc_cat=105&_nc_sid=09cbfe&_nc_ohc=jRA4VRwnVLcAX98vln7&_nc_ht=scontent.ftpa1-1.fna&oh=658c8dfa4d6cc1ca0f1f9a2dfabe288d&oe=5F8ADE18" alt="Mike" style="width:100%">
+				  <h3>Albert Gong</h3>
+				  <p class="w3-opacity">Founder</p>
+				  <p>Albert is a Computer Science major at Yale interested in using technology to better patient experience.</p>
+				  <p><a href="#contactUs"><button class="w3-button w3-light-grey w3-block">Contact</button></a></p>
+				</div>
+				<div class="w3-col l3 m6 w3-margin-bottom">
+				  <img src="https://scontent.ftpa1-1.fna.fbcdn.net/v/t1.0-9/117055307_1177030679339612_25561420511488672_o.jpg?_nc_cat=108&_nc_sid=09cbfe&_nc_ohc=blxkqbcZtxEAX_luQBd&_nc_ht=scontent.ftpa1-1.fna&oh=ab9b4a88ec0f7dcfe55337e19bfc5263&oe=5F896D34" alt="Dan" style="width:100%">
+				  <h3>Adit Gupta </h3>
+				  <p class="w3-opacity">Founder</p>
+				  <p>Adit is a Computer Science and Political Science major at Yale with a personal investment in this project.</p>
+				  <p><a href="#contactUs"><button class="w3-button w3-light-grey w3-block">Contact</button></a></p>
+				</div>
+			</div>
+
+			<a href="#contactUs"><input class="downButton" type="image" src="https://cdn1.iconfinder.com/data/icons/arrows-14/24/Arrow-Down_in_Circle-512.png"/></a>
+		</header>
+
+		<header id="contactUs">
+			<div class="container">
+				<div class="ContactUsTitle">
+					<h1>Contact Us</h1>
+				</div>
+				<form action="#">
+					<label for="name">Name:</label>
+					<br>
+					<input type="text" id="name" name="name" placeholder="Your name..">
+					<br>
+					<label for="email">Email:</label>
+					<br>
+					<input type="text" id="email" name="email" placeholder="Your email..">
+					<br>
+					<label for="message">Message:</label>
+					<br>
+					<textarea id="subject1" name="subject1" placeholder="Write something.." style="height:200px"></textarea>
+					<br>
+					<input type="submit" value="Submit">
+				</form>
+				<a href="#homeHeader"><input class="upButton" type="image" src="https://cdn1.iconfinder.com/data/icons/arrows-224/48/arrow-up-circle-512.png"/></a>
+			</div>
+		</header>
+
+		<header id="footerHeader">
+			<div class = "BottomText">
+				<p> Email Us: rajat.doshi@yale.edu | Tel: (203) 432-4771 | Yale University, New Haven, Connecticut 06520 </p>
+			</div>
+		</header>
+
+	</body>
+</html>
