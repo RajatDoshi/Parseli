@@ -42,3 +42,11 @@ gcloud ml speech recognize gs://cloud-samples-tests/speech/brooklyn.flac \
 Python code samples:
 
 https://github.com/googleapis/python-speech/tree/master/samples
+
+## NLP Parsing
+
+Setup:
+
+```
+python -m spacy download en_core_web_sm
+```
