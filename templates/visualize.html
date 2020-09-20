@@ -31,9 +31,28 @@
             {% endfor %}
 
             <br><br>
-            <table>
-                <th></th>
-            </table>
+            {% for drug in reviews %}
+                {% if drug != [] %}
+                    <table id="myTable">
+                        <thead>
+                            <tr>
+                                <th>Drug Name</th>
+                                <th>Condition</th>
+                                <th>Review</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for reviewDict in drug %}
+                            <tr>
+                                <td>{{ reviewDict.drugName }}</td>
+                                <td>{{ reviewDict.cond }}</td>
+                                <td>{{ reviewDict.review }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% endfor %}
         </div>
 
     </body>

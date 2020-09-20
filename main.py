@@ -1,3 +1,5 @@
+#  export GOOGLE_APPLICATION_CREDENTIALS="/Users/rajatdoshi/Downloads/galvanic-axle-290004-c6a6fb3ba177.json"
+
 from speech2text import transcribe, parse, renderEntities, DISEASE_SYMPTOMS
 from db.sql_queries import getReviews
 
