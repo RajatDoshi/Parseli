@@ -1,4 +1,4 @@
-# hackMIT
+# Parseli
 
 ## MySQL setup using GCP
 
