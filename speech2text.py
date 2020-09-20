@@ -25,7 +25,7 @@ client = speech.SpeechClient()
 nlp = spacy.load("en_core_web_sm")
 normal_corpus = set(brown.words())
 
-drug_data = pd.read_csv('db/Drug_data_table.csv', index_col=0)
+drug_data = pd.read_csv('datasets/Drug_data_table.csv', index_col=0)
 drug_names = set() # Drug names
 single_terms = set() # Single words
 print("Reading drug data...")
@@ -40,7 +40,7 @@ for i, row in tqdm(drug_data.iterrows()):
             if term not in normal_corpus:
                 single_terms.add(term)
 
-disease_data = pd.read_csv('disease_data/dataset.csv')
+disease_data = pd.read_csv('datasets/disease_data/dataset.csv')
 print("Reading disease data...")
 DISEASE_SYMPTOMS = {}
 symptom_names = set()

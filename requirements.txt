@@ -3,3 +3,5 @@ spacy
 firebase
 pyrebase
 mysql-connector-python
+pandas
+nltk

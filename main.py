@@ -42,13 +42,13 @@ if not os.path.exists(user_data_dir):
 DISEASE_INFO = {}
 
 getDiseaseID = lambda s : s.strip().lower().replace(' ', '_')
-description_df = pd.read_csv('disease_data/symptom_Description.csv')
+description_df = pd.read_csv('datasets/disease_data/symptom_Description.csv')
 for i, row in description_df.iterrows():
 	disease_id = getDiseaseID(row['Disease'])
 	description = row['Description']
 	DISEASE_INFO[disease_id] = {"name" : row['Disease'], "description" : description}
 
-precaution_df = pd.read_csv('disease_data/symptom_precaution.csv')
+precaution_df = pd.read_csv('datasets/disease_data/symptom_precaution.csv')
 for i, row in precaution_df.iterrows():
 	disease_id = getDiseaseID(row['Disease'])
 	precautions = []
