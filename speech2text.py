@@ -45,7 +45,7 @@ try:
     with open(disease_symptoms_path, 'r') as f:
         DISEASE_SYMPTOMS = json.load(f)
     print("Disease symptoms data loaded from", disease_symptoms_path)
-    
+
 except FileNotFoundError:
     drug_data = pd.read_csv('datasets/Drug_data_table.csv', index_col=0)
     drug_names = set() # Drug names
@@ -121,11 +121,15 @@ except FileNotFoundError:
 # Add names to entity ruler
 entity_ruler = EntityRuler(nlp)
 
+# frequency_patterns = [
+#     {'label':'DOSAGE', 'pattern':[{"LOWER": s} for s in tokens], 'id': name.replace(' ', '_')}
+# ]
+
 other_pipes = [p for p in nlp.pipe_names if p != "tagger"]
 with nlp.disable_pipes(*other_pipes):
     entity_ruler.add_patterns(entity_patterns)
 
-nlp.add_pipe(entity_ruler, before='ner')
+nlp.add_pipe(entity_ruler, after='ner')
 print(nlp.pipe_names)
 
 def transcribe(file_name):
