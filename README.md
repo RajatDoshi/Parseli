@@ -50,4 +50,15 @@ Setup:
 
 ```
 python -m spacy download en_core_web_sm
+python -m nltk.downloader all
 ```
+
+## Data Sources
+
+### Diseases & Symptoms
+
+https://www.kaggle.com/data/55703#
+
+https://www.kaggle.com/itachi9604/disease-symptom-description-dataset?select=dataset.csv
+
+https://www.kaggle.com/plarmuseau/sdsort/home?select=symptoms2.csv

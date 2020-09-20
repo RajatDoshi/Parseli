@@ -1,4 +1,4 @@
-from speech2text import getTranscript, parse, renderEntities
+from speech2text import transcribe, parse, renderEntities, DISEASE_SYMPTOMS
 
 from flask import Flask, render_template, redirect, request, session, flash
 from werkzeug.utils import secure_filename
@@ -6,6 +6,7 @@ from werkzeug.datastructures import  FileStorage
 import pyrebase
 
 import os
+import pandas as pd
 
 app = Flask(__name__)   
 
@@ -36,6 +37,24 @@ user_data_dir = "user_data"
 if not os.path.exists(user_data_dir):
 	os.makedirs(user_data_dir, exist_ok=True)
 
+# Disease data
+DISEASE_INFO = {}
+
+getDiseaseID = lambda s : s.strip().lower().replace(' ', '_')
+description_df = pd.read_csv('disease_data/symptom_Description.csv')
+for i, row in description_df.iterrows():
+	disease_id = getDiseaseID(row['Disease'])
+	description = row['Description']
+	DISEASE_INFO[disease_id] = {"name" : row['Disease'], "description" : description}
+
+precaution_df = pd.read_csv('disease_data/symptom_precaution.csv')
+for i, row in precaution_df.iterrows():
+	disease_id = getDiseaseID(row['Disease'])
+	precautions = []
+	for n in range(1, 5):
+		precautions.append(row[f'Precaution_{n}'])
+	DISEASE_INFO[disease_id]["precautions"] = precautions
+
 @app.route("/")                   
 def home():
 	return render_template('index.html')
@@ -60,15 +79,24 @@ def uploader():
 
 @app.route("/visualize")                   
 def visualize():
-	#wrote out the firebase command for you
-	fileName = fileNameTableDatabase.get('/fileNameTable', None)   
-	# return fileName
-	recognized_text = getTranscript(fileName)
+	# fileName = fileNameTableDatabase.get('/fileNameTable', None)   
+	# recognized_text = getTranscript(fileName)
+
+	with open('test_data/transcription.txt', 'r') as f:
+		recognized_text = f.read()
 	doc = parse(recognized_text)
 	annotated_transcript = renderEntities(doc)
-	# return render_markup
-	return render_template("visualize.html", annotated_transcript=annotated_transcript)
+	
+	disease_info = []
+	for ent in doc.ents:
+		print(ent.label_, ent.ent_id_)
+		if ent.label_ == "DISEASE" and ent.ent_id_ in DISEASE_INFO.keys():
+			disease_info.append( DISEASE_INFO[ent.ent_id_] )
+	print(disease_info)
+	return render_template("visualize.html", 
+		annotated_transcript=annotated_transcript, 
+		disease_info=disease_info)
 
 
 if __name__ == "__main__":        
-    app.run()
+    app.run(debug=True)
