@@ -1,4 +1,5 @@
 from speech2text import transcribe, parse, renderEntities, DISEASE_SYMPTOMS
+from db.sql_queries import getReviews
 
 from flask import Flask, render_template, redirect, request, session, flash
 from werkzeug.utils import secure_filename
@@ -88,14 +89,19 @@ def visualize():
 	annotated_transcript = renderEntities(doc)
 	
 	disease_info = []
+	drug_names = []
 	for ent in doc.ents:
 		print(ent.label_, ent.ent_id_)
 		if ent.label_ == "DISEASE" and ent.ent_id_ in DISEASE_INFO.keys():
 			disease_info.append( DISEASE_INFO[ent.ent_id_] )
+		elif ent.label_ == "DRUG":
+			drug_names.append(ent.text.lower())
+
 	print(disease_info)
 	return render_template("visualize.html", 
 		annotated_transcript=annotated_transcript, 
-		disease_info=disease_info)
+		disease_info=disease_info,
+		reviews= [getReviews(drug_name=drug) for drug in drug_names])
 
 
 if __name__ == "__main__":        

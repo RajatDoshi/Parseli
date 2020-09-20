@@ -62,3 +62,7 @@ https://www.kaggle.com/data/55703#
 https://www.kaggle.com/itachi9604/disease-symptom-description-dataset?select=dataset.csv
 
 https://www.kaggle.com/plarmuseau/sdsort/home?select=symptoms2.csv
+
+Drug Review Data:
+
+https://www.kaggle.com/jessicali9530/kuc-hackathon-winter-2018

@@ -2,3 +2,4 @@ google-cloud-speech
 spacy
 firebase
 pyrebase
+mysql-connector-python
