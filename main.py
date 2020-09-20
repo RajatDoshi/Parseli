@@ -1,7 +1,7 @@
 #  export GOOGLE_APPLICATION_CREDENTIALS="/Users/rajatdoshi/Downloads/galvanic-axle-290004-c6a6fb3ba177.json"
 
 from speech2text import transcribe, parse, renderEntities, DISEASE_SYMPTOMS
-from db.sql_queries import getReviews
+from db.sql_queries import getReviews, getDrugInfo
 
 from flask import Flask, render_template, redirect, request, session, flash
 from werkzeug.utils import secure_filename
@@ -82,11 +82,11 @@ def uploader():
 
 @app.route("/visualize")                   
 def visualize():
-	# fileName = fileNameTableDatabase.get('/fileNameTable', None)   
-	# recognized_text = getTranscript(fileName)
+	fileName = fileNameTableDatabase.get('/fileNameTable', None)   
+	recognized_text = transcribe(fileName)
 
-	with open('test_data/transcription.txt', 'r') as f:
-		recognized_text = f.read()
+	# with open('test_data/transcription.txt', 'r') as f:
+	# 	recognized_text = f.read()
 	doc = parse(recognized_text)
 	annotated_transcript = renderEntities(doc)
 	
@@ -103,7 +103,7 @@ def visualize():
 	return render_template("visualize.html", 
 		annotated_transcript=annotated_transcript, 
 		disease_info=disease_info,
-		reviews= [getReviews(drug_name=drug) for drug in drug_names])
+		drug_data= [{'name': drug, 'reviews':getReviews(drug_name=drug), 'info':getDrugInfo(drug)} for drug in drug_names])
 
 
 if __name__ == "__main__":        

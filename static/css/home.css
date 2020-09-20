@@ -33,6 +33,7 @@ header {
 #footerHeader {
 	background-color: #282828;
 	height: 10vh;
+	position: relative;
 }
 
 .WebsiteTitle {

@@ -25,3 +25,22 @@
   background-color: lightblue;
   color: white;
 }
+
+header {
+	background-size: cover;
+	background-position: center;
+	width: 100%;
+}
+
+.BottomText {
+	text-align: center;
+	padding: 2%;
+	color: white;
+	font-size: 18px;
+}
+
+#footerHeader {
+	background-color: #282828;
+	height: 10vh;
+	position: relative;
+}

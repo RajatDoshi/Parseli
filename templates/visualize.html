@@ -6,7 +6,9 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/visualize.css') }}">
-		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}"> -->
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        
 	</head>
 	<body>
         <div id="content-page">
@@ -16,7 +18,7 @@
             {{ annotated_transcript | safe }}
 
             <br><br>
-            <h4>Details</h4>
+            <h3>Details</h3>
             {% for item in disease_info %}
                 <p>{{ item['name'] }}</p>
                 <p>{{ item['description'] }}</p>
@@ -31,22 +33,62 @@
             {% endfor %}
 
             <br><br>
-            {% for drug in reviews %}
-                {% if drug != [] %}
-                    <table id="myTable">
+            {% for drug in drug_data %}
+                {% if drug.info != [] %}
+                    <h4>Information for <em>{{ drug.name }}</em></h4>
+                    <table class="infoTables">
+                        <thead>
+                            <tr>
+                                <th>Product Type</th>
+                                <th>Proprietary Name</th>
+                                <th>Medical Name</th>
+                                <th>Dosage</th>
+                                <th>Administered</th>
+                                <th>Substance</th>
+                                <th>Strength</th>
+                                <th>Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in drug.info %}
+                            <tr>
+                                <td>{{ item.productType }}</td>
+                                <td>{{ item.propName }}</td>
+                                <td>{{ item.medName }}</td>
+                                <td>{{ item.dosage }} / 10</td>
+                                <td>{{ item.administered }}</td>
+                                <td>{{ item.substance }}</td>
+                                <td>{{ item.strength }}</td>
+                                <td>{{ item.unit }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                <br><br>
+                {% if drug.reviews != [] %}
+                    <h4>Reviews for <em>{{ drug.name }}</em></h4>
+                    <table class="reviewTables">
                         <thead>
                             <tr>
                                 <th>Drug Name</th>
                                 <th>Condition</th>
                                 <th>Review</th>
+                                <th>Rating</th>
+                                <th>Date</th>
+                                <th>Upvotes</th>
                             </tr>
                         </thead>
                         <tbody>
-                        {% for reviewDict in drug %}
+                        {% for item in drug.reviews %}
                             <tr>
-                                <td>{{ reviewDict.drugName }}</td>
-                                <td>{{ reviewDict.cond }}</td>
-                                <td>{{ reviewDict.review }}</td>
+                                <td>{{ item.drugName }}</td>
+                                <td>{{ item.cond }}</td>
+                                <td>{{ item.review }}</td>
+                                <td>{{ item.rating }} / 10</td>
+                                <td>{{ item.date }}</td>
+                                <td>{{ item.usefulCount }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -54,6 +96,12 @@
                 {% endif %}
             {% endfor %}
         </div>
+        <br><br><br>
 
+        <header id="footerHeader">
+			<div class = "BottomText">
+				<p> Email Us: rajat.doshi@yale.edu | Tel: (203) 432-4771 | Yale University, New Haven, Connecticut 06520 </p>
+			</div>
+		</header>
     </body>
 </html>

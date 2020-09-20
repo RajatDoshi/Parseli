@@ -1,4 +1,4 @@
-from . import connection, drug_reviews_table_name
+from . import connection, drug_reviews_table_name, drug_info_table_name
 
 def getReviews(drug_name=None, cond_name=None, nrows=10):
     command = f"SELECT * FROM {drug_reviews_table_name}"
@@ -25,12 +25,20 @@ def getReviews(drug_name=None, cond_name=None, nrows=10):
 
 def getDrugNames(cond_name):
     with connection.cursor(dictionary=True) as cursor:
-        cursor.execute(f"select distinct(drugName) from DRUG_REVIEWS where cond = '{cond_name}'")
+        cursor.execute(f"select distinct(drugName) from {drug_reviews_table_name} where cond = '{cond_name}'")
         rows = cursor.fetchall()
     return rows
 
 def getCondNames(drug_name):
     with connection.cursor(dictionary=True) as cursor:
-        cursor.execute(f"select distinct(cond) from DRUG_REVIEWS where drugName = '{drug_name}'")
+        cursor.execute(f"select distinct(cond) from {drug_reviews_table_name} where drugName = '{drug_name}'")
+        rows = cursor.fetchall()
+    return rows
+
+def getDrugInfo(drug_name, nrows=10):
+    with connection.cursor(dictionary=True) as cursor:
+        cursor.execute(f"select * from {drug_info_table_name} where " \
+            f"LOWER(propName) LIKE '%{drug_name}%' OR " \
+            f"LOWER(medName) LIKE '%{drug_name}%' LIMIT {nrows}")
         rows = cursor.fetchall()
     return rows

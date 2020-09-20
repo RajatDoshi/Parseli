@@ -5,3 +5,4 @@ pyrebase
 mysql-connector-python
 pandas
 nltk
+jsonlines

@@ -20,26 +20,60 @@ from datetime import datetime
 def createDrugInfoTable():
     with connection.cursor() as cursor:
         #this will create a table within the drug_data database
-        cursor.execute(f"CREATE TABLE {drug_info_table_name} (INDEX_c int, Code CHAR(255), DType CHAR(255), Name CHAR(255), Administered CHAR(255), MName CHAR(255), Dosage CHAR(255), Istrength CHAR(255))")
+        print('Connection opened')
+        cursor.execute(f"DROP TABLE IF EXISTS {drug_info_table_name};")
+        print('Dropped table')
+        cursor.execute(f"""CREATE TABLE {drug_info_table_name} ( 
+            id int PRIMARY KEY AUTO_INCREMENT,
+            drugCode VARCHAR(10), 
+            productType VARCHAR(1000), 
+            propName VARCHAR(1000), 
+            medName  VARCHAR(1000),
+            dosage VARCHAR(1000),
+            administered TEXT(65535), 
+            substance TEXT(65535), 
+            strength TEXT(65535), 
+            unit TEXT(65535));""")
+        print('Database created successfully')
 
-        all_drug_data = pd.read_csv("Drug_data_table.csv")
-        all_drug_data = all_drug_data.dropna().head(1000)
-        all_drug_data = all_drug_data.drop(columns = ["Substance", "Active Ingredient Unit"])
-        rows_drug_data = list(all_drug_data.itertuples(index=False, name=None))
-        for row in rows_drug_data:
-            cursor.execute(f"INSERT INTO {drug_info_table_name} (INDEX_c, Code, DType, Name, MName, Dosage, Administered, Istrength) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (row[0], row[1][0:255], row[2][0:255], row[3][0:255], row[4][0:255], row[5][0:255], row[6][0:255], row[7][0:255]));
+        df = pd.read_csv("/Users/agong/research/hackmit2020/hackMIT/datasets/Drug_data_table.csv")
+
+        values = []
+        for i, row in tqdm(df.iterrows()):
+            # print(tuple(row))
+            values.append([None if pd.isnull(x) else x for x in tuple(row)[1:]])
+
+        command = f"""INSERT INTO {drug_info_table_name} 
+            (drugCode, productType, propName, medName, dosage, administered, substance, strength, unit) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+
+        cursor.executemany( command, values )
         connection.commit()
 
-        cursor.execute("select * from drugfacts_allinfo")
-        rows = cursor.fetchall()
-        for row in rows:
-        	print(row)
+
+        # with connection.cursor() as cursor:
+        #     #this will create a table within the drug_data database
+        #     cursor.execute(f"CREATE TABLE {drug_info_table_name} (INDEX_c int, Code CHAR(255), DType CHAR(255), Name CHAR(255), Administered CHAR(255), MName CHAR(255), Dosage CHAR(255), Istrength CHAR(255))")
+
+        #     all_drug_data = pd.read_csv("Drug_data_table.csv")
+        #     all_drug_data = all_drug_data.dropna().head(1000)
+        #     all_drug_data = all_drug_data.drop(columns = ["Substance", "Active Ingredient Unit"])
+        #     rows_drug_data = list(all_drug_data.itertuples(index=False, name=None))
+        #     for row in rows_drug_data:
+        #         cursor.execute(f"INSERT INTO {drug_info_table_name} (INDEX_c, Code, DType, Name, MName, Dosage, Administered, Istrength) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (row[0], row[1][0:255], row[2][0:255], row[3][0:255], row[4][0:255], row[5][0:255], row[6][0:255], row[7][0:255]));
+        #     connection.commit()
+
+        #     cursor.execute("select * from drugfacts_allinfo")
+        #     rows = cursor.fetchall()
+        #     for row in rows:
+        #         print(row)
 
 def createDrugReviewsTable():
     with connection.cursor() as cursor:
         #this will create a table within the drug_data database
-        
+        print('Connection opened')
         cursor.execute(f"DROP TABLE IF EXISTS {drug_reviews_table_name};")
+        print('Dropped table')
         cursor.execute(f"""CREATE TABLE {drug_reviews_table_name} ( 
             id int PRIMARY KEY, 
             drugName VARCHAR(1000), 
@@ -48,13 +82,14 @@ def createDrugReviewsTable():
             rating int, 
             date DATE, 
             usefulCount int);""")
+        print('Databases created successfully')
 
         df = pd.read_csv("/Users/agong/research/hackmit2020/Drug_Review_Dataset/drugsComTest_raw.csv", nrows=1000)
 
         for i, row in tqdm(df.iterrows()):
             # print(tuple(row))
             try:
-                dt = datetime.strptime(row['date'], "%y-%b-%d")
+                dt = datetime.strptime(row['date'], "%d-%b-%y")
                 date_str = dt.strftime("%Y-%m-%d")
             except ValueError:
                 date_str = None
@@ -76,10 +111,11 @@ def createDrugReviewsTable():
         #     print(row)
 
 if __name__ == "__main__":
+    # createDrugInfoTable()
     # createDrugReviewsTable()
 
     with connection.cursor(dictionary=True) as cursor:
-        cursor.execute("select * from DRUG_REVIEWS limit 10;")
+        cursor.execute(f"select * from {drug_info_table_name} limit 10;")
         rows = cursor.fetchall()
         for row in rows:
             print(row)
